@@ -27,8 +27,11 @@ Objektově orientované programování vychá-zí ze třech základních princip
 > polymorfismus
 
 Atributy jsou proměnné objektu.
+
 Metoda je pojmenovaná funkce objektu.
+
 Jména atributů a metody objektů definujeme pomocí tříd a objekt je pak instancí této třidy.
+
 Inicializace atributů nám pomáhá k definování typu jakými atributy budou a zabraňuje nekonzistentním tavům.
 
 ## základní třída
@@ -51,4 +54,6 @@ Inicializace atributů nám pomáhá k definování typu jakými atributy budou 
         def set_y(self, y):
             self.y = y
             return self
+            
+Jak vidím self.x a self.y jsou inicializované atributy na typ int a maji pomocné metody, které nám umožňují přisupovat k nim tak, abychom přímo neměnili atributy, ale přistupovali k nim pomocí geterů a seterů. Tady tomu se říká **zapozdření** když k atributům přistupujme skrze metody. Aby nedošlo k nekonzistentnímu stavu, tak vrámci těchto metod můžeme hlídat jestli uživatel chce zapsat do atributu odpovídající typ a to je taky důvod proč getery a settery využíváme  *Je třeba říct, že takto už se to dnes nědělá a využívají se k tomu podtržítka pro definování toho, ke kterým atributům mužeme přistupovat a ke kterým ne.* 
 
