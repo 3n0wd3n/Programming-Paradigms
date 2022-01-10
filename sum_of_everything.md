@@ -14,4 +14,11 @@ PROCEDURAL | OOP | FUNCTIONAL | PARALEL | LOGICAL
 # OOP 
 -----
 
+V objektově orientovaném programování je hodnota společně s funkcemi, které s ní
+pracují, chápána jako jeden celek nazývaný objekt. Každý objekt je opět hodnotou.
+Objekt můžeme dávat do proměnných, použít jako argument volání funkce nebo jej
+funkcí vrátit.
+
+
+
 
