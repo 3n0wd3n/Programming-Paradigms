@@ -12,7 +12,6 @@ PROCEDURAL | OOP | FUNCTIONAL | PARALEL | LOGICAL
 **prvni rocnik** *(letni i zimni semestr)* | **druhy rocnik** *(zimni semestr)*| generátory & iterátor | **druhy rocnik** *(zimni semestr)* | **druhy rocnik** *(zimni semestr)* |
 
 # OOP 
------
 
 V objektově orientovaném programování je hodnota společně s funkcemi, které s ní
 pracují, chápána jako jeden celek nazývaný objekt. Každý objekt je opět hodnotou.
@@ -235,6 +234,14 @@ V následujícím kodu je třeba vidět i dědičnost:
 
     # Start hry.
     g.play()
+    
+# FUNCTIOANAL
+
+U funkcionálního přístupu programování jsou důležité dva předpoklady pro správně napsaný kod.
+
+> proměnné jsou neměnné
+
+> místo cyklů se využívá rekurze
 
 
 
