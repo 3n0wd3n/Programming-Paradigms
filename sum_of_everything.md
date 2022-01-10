@@ -33,22 +33,22 @@ Inicializace atributů nám pomáhá k definování typu jakými atributy budou 
 
 ## základní třída
 
-class Point:
-    def __init__(self):
-        self.x = 0
-        self.y = 0
-        
-    def get_x(self):
-        return self.x
-    
-    def get_y(self):
-        return self.y
-    
-    def set_x(self, x):
-        self.x = x
-        return self
-    
-    def set_y(self, y):
-        self.y = y
-        return self
+    class Point:
+        def __init__(self):
+            self.x = 0
+            self.y = 0
+
+        def get_x(self):
+            return self.x
+
+        def get_y(self):
+            return self.y
+
+        def set_x(self, x):
+            self.x = x
+            return self
+
+        def set_y(self, y):
+            self.y = y
+            return self
 
