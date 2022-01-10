@@ -400,7 +400,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     [[2]]
     """
 
-   # Aplikace funkce na hodnotu.
+## Aplikace funkce na hodnotu.
 
     def succ(x):
         return x + 1
@@ -473,7 +473,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     3
     """
     
-# Aplikace funkce na hodnotu.
+## Aplikace funkce na hodnotu.
 
     def succ(x):
         return x + 1
@@ -546,7 +546,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     3
     """
 
-# Konstantní funkce.
+## Konstantní funkce.
 
     def const_2(x):
         return 2
@@ -590,7 +590,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     === 4
     """
 
-# Násobení funkce číslem.
+## Násobení funkce číslem.
 
     def succ(x):
         return x + 1
@@ -634,7 +634,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     === 6
     """
     
- # Kompozice funkcí.
+## Kompozice funkcí.
 
     def succ(x):
         return x + 1
@@ -685,7 +685,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     === 5
     """
     
-  # Rekurze.
+## Rekurze.
   
     # Důsledek omezení funkcionálního přístupu:
     # - K opakování nemůžeme používat cykly.
@@ -757,7 +757,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     === 2
     """
     
-# Vytváření rekurzivních funkcí.
+## Vytváření rekurzivních funkcí.
 
     # Začneme verzí faktoriálu,
     # která neví jak spočítat faktoriál žádného čísla.
@@ -899,7 +899,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     120
     """
 
-# Filtrování seznamu.
+## Filtrování seznamu.
 
     EMPTY = []
 
@@ -943,7 +943,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     [1, [3, []]]
     """
 
-# Mapování seznamu.
+## Mapování seznamu.
 
     EMPTY = []
 
@@ -1017,7 +1017,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     [0, [1, [2, []]]]
     """
 
-# Rekurze na seznamech.
+## Rekurze na seznamech.
 
     EMPTY = []
 
@@ -1079,7 +1079,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     False
     """
 
-# Redukce seznamu.
+## Redukce seznamu.
 
     EMPTY = []
 
@@ -1182,7 +1182,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     [2, [4, []]]
     """
     
-# Seznamy.
+## Seznamy.
     
     # V této přednášce budeme seznamy Pythonu nazývat poli.
 
@@ -1271,7 +1271,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     """
 
 
-# Hodnota může být iterovatelná.
+## Hodnota může být iterovatelná.
     
     # Iterovatelnou hodnotu lze chápat jako posloupnost prvků.
     #
@@ -1346,7 +1346,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     2
     """
 
-# Funkce map očekává funkci <f> jednoho parametru a iterovatelnou hodnotu.
+## Funkce map očekává funkci <f> jednoho parametru a iterovatelnou hodnotu.
     
     # Funkce map nejprve vytvoří iterátor pro iterovatelnou hodnotu.
     # Poté vrátí iterátor návratových hodnot volání funkce <f> na prvky iterátoru.
@@ -1418,7 +1418,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     StopIteration
     """
 
-# Číselná posloupnost vytvořená funkcí range je iterovatelná hodnota.
+## Číselná posloupnost vytvořená funkcí range je iterovatelná hodnota.
     
     # Čísla v posloupnosti jsou její prvky.
 
@@ -1449,7 +1449,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
 
     # Iterátor je možné vytvořit speciálním typem funkce: generátorem.
 
-# Generátor je funkce, která
+## Generátor je funkce, která
     
     # 1) obsahuje příkaz produkující prvek iterátoru (yield),
     # 2) neobsahuje příkaz návratu (return).
@@ -1529,7 +1529,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     StopIteration
     """
 
-# Prvky iterátoru nemusí nikdy dojít.
+## Prvky iterátoru nemusí nikdy dojít.
 
     def get_numbers():
         n = 0
@@ -1606,7 +1606,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     36
     """
 
-# Iterátor je objekt, který rozumí zprávám __next__ a __iter__ bez argumentů.
+## Iterátor je objekt, který rozumí zprávám __next__ a __iter__ bez argumentů.
     
     # Poslání zprávy __next__ iterátoru, vrátí další jeho prvek.
     # Poslání zprávy __iter__ iterátoru, jej pouze vrátí.
@@ -1630,9 +1630,9 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     1
     """
 
-#LOGICAL
+# LOGICAL
     
-Tělo každé z uvedených funkcí se vykonává v samostatném vlákně.
+## Tělo každé z uvedených funkcí se vykonává v samostatném vlákně.
     
      from co import *
 
@@ -1669,7 +1669,7 @@ Tělo každé z uvedených funkcí se vykonává v samostatném vlákně.
     co_call(f1, f2) # Těla funkcí se vykonávají v samostatných vláknech.
     print("Program end") # Zde už neběží žádné vlákno.
 
-Vlákna sdílejí globální proměnné.
+## Vlákna sdílejí globální proměnné.
     
     from co import *
 
@@ -1688,7 +1688,7 @@ Vlákna sdílejí globální proměnné.
     co_call(f1, f2)
     print(var) # Můžeme dostat různý výsledek (1 nebo 2).
 
-Atomicita    
+## Atomicita    
     
     from co import *
 
@@ -1742,7 +1742,7 @@ Atomicita
     co_call(f, f)
     print(global_var) # Dostáváme různé výsledky.
     
-Kriticka sekce    
+## Kriticka sekce    
     
     from co import *
 
@@ -1803,7 +1803,7 @@ Kriticka sekce
 
     """
 
-Petersonův algoritmus
+## Petersonův algoritmus
 
     from co import *
 
@@ -1868,7 +1868,7 @@ Petersonův algoritmus
     co_call(f1, f2)
     print(var)
 
-Zámek    
+##Zámek    
     
     """
     make_lock()
@@ -1908,7 +1908,7 @@ Zámek
 
     print(var)
 
-Semafor                
+## Semafor                
                 
     from co import *
 
@@ -1944,7 +1944,7 @@ Semafor
 
     co_call(f1, f2) # Čytyřka bude vždy až za jedničkou.
 
-Vlákna si dají rande.
+##Vlákna si dají rande.
                 
     from co import *
 
@@ -1978,7 +1978,7 @@ Vlákna si dají rande.
     # Nejprve se vytiskne 1,2 (v libovolném pořadí)
     # a poté až 3,4 (také v libovolném pořadí).
               
-Producent a konzument.
+## Producent a konzument.
  
     from co import *
 
@@ -2020,7 +2020,7 @@ Producent a konzument.
 
     # Konzument zpracuje každou hodnotu, kterou producent vytvoří.
                 
-#LOGICAL
+# LOGICAL
                 
 > Kanren
 
@@ -2043,7 +2043,7 @@ Producent a konzument.
     >>>
     """
 
-EQ
+## EQ
 
     from kanren import var, run, eq
 
@@ -2144,7 +2144,7 @@ EQ
     ((1, 2),)
     """
 
-LALL a LANY
+## LALL a LANY
 
     from kanren import var, run, eq, lall, lany
 
@@ -2200,7 +2200,7 @@ LALL a LANY
     ((1, 1), (2, 1), (1, 2), (2, 2))
     """
 
-MEMBERO
+## MEMBERO
                 
     from kanren import var, run, eq, lall, lany, membero
 
@@ -2260,7 +2260,7 @@ MEMBERO
     (1, 3, 2, 4)
     """
 
-ARITH                
+## ARITH                
                 
     from kanren import run, eq, var, membero
     from kanren.arith import add
@@ -2288,7 +2288,7 @@ ARITH
     (5, 6, 7, 8)
     """
 
-RELATION
+## RELATION
                 
     from kanren import run, eq, membero, var, conde, Relation, facts
 
