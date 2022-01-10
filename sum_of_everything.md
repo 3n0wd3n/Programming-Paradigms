@@ -1632,7 +1632,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     1
     """
 
-# LOGICAL
+# PARALEL
     
 ## Tělo každé z uvedených funkcí se vykonává v samostatném vlákně.
     
@@ -1870,7 +1870,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     co_call(f1, f2)
     print(var)
 
-##Zámek    
+## Zámek    
     
     """
     make_lock()
@@ -1946,7 +1946,7 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
 
     co_call(f1, f2) # Čytyřka bude vždy až za jedničkou.
 
-##Vlákna si dají rande.
+## Vlákna si dají rande.
                 
     from co import *
 
