@@ -21,7 +21,9 @@ funkcí vrátit.
 
 Objektově orientované programování vychá-zí ze třech základních principů (rysů):
 > zapouzdření (encapsulation)
+
 > dědičnost (inheritance)
+
 > polymorfismus
 
 
