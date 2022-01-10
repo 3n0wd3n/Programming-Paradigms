@@ -1630,4 +1630,733 @@ U funkcionálního přístupu programování jsou důležité dva předpoklady p
     1
     """
 
+#LOGICAL
+    
+Tělo každé z uvedených funkcí se vykonává v samostatném vlákně.
+    
+     from co import *
 
+    """
+    co_call(function1, ..., functionN)
+
+        Paralelně zavolá funkce <function1>, ..., <functionN> bez argumentů čeká, než volání funkcí skončí.
+
+
+    random_sleep(duration=0.01)
+
+        Čeká náhodný čas. Nevíše <duration> sekund.
+
+
+    safe_print(value1, ..., valueN)
+
+        Vytiskne hodnoty <value1>, ..., <valueN>.
+
+        Nutno použít místo print při tisku ve vláknech.
+    """
+
+    def f1():
+        random_sleep() # Simuluje činnost.
+        safe_print("Start computation 1") # Nelze použít print.
+        random_sleep()
+        safe_print("End computation 1")
+
+    def f2():
+        random_sleep()
+        safe_print("Start computation 2")
+        random_sleep()
+        safe_print("End computation 2")
+
+    co_call(f1, f2) # Těla funkcí se vykonávají v samostatných vláknech.
+    print("Program end") # Zde už neběží žádné vlákno.
+
+Vlákna sdílejí globální proměnné.
+    
+    from co import *
+
+    var = None
+
+    def f1():
+        global var
+        random_sleep()
+        var = 1
+
+    def f2():
+        global var
+        random_sleep()
+        var = 2
+
+    co_call(f1, f2)
+    print(var) # Můžeme dostat různý výsledek (1 nebo 2).
+
+Atomicita    
+    
+    from co import *
+
+    """
+    Atomickým nazveme příkaz, který nejvíše jednou čte nebo zapisuje do globální proměnné.
+
+
+    Například uvažujme globální proměnnou global_var
+
+
+    Příkaz:
+
+    save_print(global_var)
+
+    je atomický. Jen čte z globální proměnné.
+
+    Příkaz:
+
+    global_var = 2
+
+    je také atomický. Jen zapisuje do globální proměnné. 
+
+    Příkaz:
+
+    global_var = global_var + 1
+
+    není atomický. Čte i zapisuje do globální proměnné.
+
+    Příkaz:
+
+    global_var += 1
+
+    není atomický. Čte i zapisuje do globální proměnné.
+
+
+    Ve vláknech budeme používat atomické příkazy.
+    """
+
+
+    global_var = 0
+
+    def f():
+        global global_var
+        for i in range(10):
+            random_sleep()
+            local_var = global_var
+            random_sleep()
+            global_var = local_var + 1
+
+
+    co_call(f, f)
+    print(global_var) # Dostáváme různé výsledky.
+    
+Kriticka sekce    
+    
+    from co import *
+
+    var = 0
+
+    def f1():
+        global var
+        for i in range(10):
+            # Nekritická sekce
+            random_sleep()        
+
+            # Vstupní protokol
+
+            # Kritická sekce:
+            random_sleep()
+            local_var = var
+            random_sleep()
+            var = local_var + 1
+
+            # Výstupní protokol
+
+    def f2():
+        global var
+        for i in range(10):
+            # Nekritická sekce
+            random_sleep()
+
+            # Vstupní protokol
+
+            # Kritická sekce:
+            random_sleep()
+            local_var = var
+            random_sleep()
+            var = local_var + 1
+
+            # Výstupní protokol
+
+    co_call(f1, f2)
+    print(var)
+
+    """
+    Požadavky na kritickou sekci.
+
+    1. Vzájemná výlučnost.
+
+       V kritické sekci může být nejvíše jedeno vlákno.
+
+    2. Absence uváznutí.
+
+       Pokud je kritická sekce volná a
+       některá vlákna se snaží do ní vstoupit,
+       pak musí některé z nich uspět.
+
+    3. Absence vyhladovění.
+
+       Jestliže se vlákno snaží vstoupit do kritické sekce,
+       pak musí někdy uspět.
+
+    """
+
+Petersonův algoritmus
+
+    from co import *
+
+    want1 = False
+    want2 = False
+    turn = 1
+
+    var = 0
+
+    def f1():
+        global var, want1, want2, turn
+        for i in range(10):
+            # Nekritická sekce
+            random_sleep()
+
+            # Vstupní protokol:
+            want1 = True
+            while want2:
+                if turn == 2:
+                    want1 = False
+                    while turn == 2:
+                        pass
+                    want1 = True
+
+            # Kritická sekce:
+            random_sleep()
+            local_var = var
+            random_sleep()
+            var = local_var + 1
+
+            # Výstupní protokol:
+            turn = 2
+            want1 = False
+
+
+    def f2():
+        global var, want1, want2, turn
+
+        for i in range(10):
+            # Nekritická sekce
+            random_sleep()
+
+            # Vstupní protokol:
+            want2 = True
+            while want1:
+                if turn == 1:
+                    want2 = False
+                    while turn == 1:
+                        pass
+                    want2 = True
+
+            # Kritická sekce:
+            random_sleep()
+            local_var = var
+            random_sleep()
+            var = local_var + 1
+
+            # Výstupní protokol:
+            turn = 1
+            want2 = False
+
+    co_call(f1, f2)
+    print(var)
+
+Zámek    
+    
+    """
+    make_lock()
+
+        Vytvoří zámek.
+
+        Použití:
+
+        lock = make_lock()
+        with lock:
+            <block>
+    """
+
+
+    from co import *
+
+    lock = make_lock()
+
+    var = 0
+
+    def f():
+        global var
+        for i in range(10):
+            # Nekritická sekce:
+            random_sleep()
+
+            # Zajistí vstupní i výstupní protokol:
+            with lock:
+
+                # Kritická sekce:
+                random_sleep()
+                local_var = var
+                random_sleep()
+                var = local_var + 1
+
+    co_call(f, f)
+
+    print(var)
+
+Semafor                
+                
+    from co import *
+
+    """
+    make_semaphore(value)
+
+        Vytvoří semafor s hodnotou <value>.
+
+    semaphore_signal(semaphore)
+
+        Zvýší hodnotou semaforu o jedna.
+
+    semaphore_wait(semaphore)
+
+        Sníží hodnotu semaforu o jedna. Případně čeká, až to bude možné.
+    """
+
+    semaphore = make_semaphore(0)
+
+    def f1():
+        random_sleep() 
+        safe_print(1)
+        semaphore_signal(semaphore)
+        random_sleep()
+        safe_print(3)
+
+    def f2():
+        random_sleep()
+        safe_print(2)
+        semaphore_wait(semaphore)
+        random_sleep()
+        safe_print(4)
+
+    co_call(f1, f2) # Čytyřka bude vždy až za jedničkou.
+
+Vlákna si dají rande.
+                
+    from co import *
+
+    a_arrived = make_semaphore(0)
+    b_arrived = make_semaphore(0)
+
+    def thread_a():
+        random_sleep() 
+        safe_print(1)
+        random_sleep()    
+
+        semaphore_signal(a_arrived)
+        semaphore_wait(b_arrived)
+
+        random_sleep()
+        safe_print(3)
+
+    def thread_b():
+        random_sleep()
+        safe_print(2)
+        random_sleep()
+
+        semaphore_signal(b_arrived)
+        semaphore_wait(a_arrived)
+
+        random_sleep()
+        safe_print(4)
+
+    co_call(thread_a, thread_b)
+
+    # Nejprve se vytiskne 1,2 (v libovolném pořadí)
+    # a poté až 3,4 (také v libovolném pořadí).
+              
+Producent a konzument.
+ 
+    from co import *
+
+    store_full = make_semaphore(0)
+    store_free = make_semaphore(1)
+
+    store = None
+
+    def producer():
+        global store
+
+        for i in range(10):
+            random_sleep() 
+            value = 2 ** i
+
+            semaphore_wait(store_free)
+
+            random_sleep() 
+            store = value
+
+            random_sleep()
+            semaphore_signal(store_full)
+
+    def customer():
+        while True:
+            random_sleep() 
+            semaphore_wait(store_full)
+
+            random_sleep() 
+            local = store
+
+            random_sleep() 
+            semaphore_signal(store_free)
+
+            random_sleep() 
+            safe_print(local)
+
+    co_call(producer, customer)
+
+    # Konzument zpracuje každou hodnotu, kterou producent vytvoří.
+                
+#LOGICAL
+                
+> Kanren
+
+> Japonsky 関連 relace.
+
+> Knihovna pro logické programování.
+
+> Instalace:
+                
+    % pip3 install kanren
+
+> Web: https://github.com/logpy/logpy
+
+> Více o projektu Kanren: http://minikanren.org
+
+> Test instalace:
+
+    """
+    >>> import kanren
+    >>>
+    """
+
+EQ
+
+    from kanren import var, run, eq
+
+    # Cíl
+    # (eq, x, y)
+    # je splněn, pokud se x rovná y.
+
+    # Splnění cílů:
+    #
+    # run(0, a, g1, ..., gn)
+    #
+    # kde `a` je tvar odpovědi a
+    # g1, ..., gn jsou cíle.
+    #
+    # Funkce vrátí n-tici možných odpovědí.
+    #
+    # Pokud nás nezajímá hodnota odpovědi,
+    # použijeme jako tvar odpovědi True.
+
+    # Jedna se rovná jedné:
+    """
+    >>> run(0, True, (eq, 1, 1))
+    (True,)
+    """
+    # Neprázdná n-tice znamená pravdu.
+
+    # Jedna se nerovná dva:
+    """
+    >>> run(0, True, (eq, 1, 2))
+    ()
+    """
+    # Prázdná n-tice znamená nepravdu.
+
+
+    # Vytvoříme proměnnou:
+    x = var("x")
+
+    # Tisk proměnné:
+    """
+    >>> x
+    ~x
+    """
+
+    # Jakou hodnotu musí mít x, aby se rovnalo jedné?
+    """
+    >>> run(0, x, (eq, x, 1))
+    (1,)
+    """
+
+    # Dostáváme n-tici možných hodnot proměnné x.
+
+    # Nezáleží na pořadí argumentů:
+    """
+    >>> run(0, x, (eq, 1, x))
+    (1,)
+    """
+
+
+    # Kdy se x rovná x?
+    """
+    >>> run(0, x, (eq, x, x))
+    (~x,)
+    """
+    # Odpověď: hodnota x se musí rovnat hodnotě x. Tedy vždy.
+
+    # Vytvoříme další proměnnou:
+    y = var("y")
+
+    # Můžeme zadat více cílů. Musí být splněny všechny cíle:
+    """
+    >>> run(0, True, (eq, 1, 1), (eq, 2, 2))
+    (True,)
+    >>> run(0, True, (eq, 1, 1), (eq, 2, 1))
+    ()
+    """
+
+    # Čemu se rovná x, když víme, že x je rovno y a y je rovno 2?
+    """
+    >>> run(0, x, (eq, x, y), (eq, y, 2))
+    (2,)
+    """
+
+    # Může být x rovno 1 a 2 současně?
+    """
+    >>> run(0, x, (eq, x, 1), (eq, x, 2))
+    ()
+    """
+
+    # Výsledek může být dvojce hodnot proměnných:
+    """
+    >>> run(0, (x, y), (eq, x, y), (eq, y, 2))
+    ((2, 2),)
+    """
+
+    # Cíl eq lze použít i na porovnávání n-tic:
+    """
+    >>> run(0, (x, y), (eq, (x, 2), (1, y)))
+    ((1, 2),)
+    """
+
+LALL a LANY
+
+    from kanren import var, run, eq, lall, lany
+
+    # Cíl
+    #
+    # (lany, g1, ..., gn)
+    #
+    # je splněn, pokud je splněný libovolný z cílů g1, ..., gn
+
+    # Proměnné
+    x = var("x")
+    y = var("y")
+
+    # Proměnná x může mít hodnotu jedna nebo dva:
+    """
+    >>> run(0, x, (lany, (eq, x, 1), (eq, x, 2)))
+    (1, 2)
+    """
+
+    # Cíl
+    #
+    # (lall, g1, ..., gn)
+    #
+    # je splněn, pokud jsou splněny všechny cíle g1, ..., gn
+
+    # Dotaz:
+    """
+    >>> run(0, (x, y), (lall, (eq, x, 1), (eq, y, 2)))
+    ((1, 2),)
+    """
+    # Je stejný jako:
+    """
+    >>> run(0, (x, y), (eq, x, 1), (eq, y, 2))
+    ((1, 2),)
+    """
+
+    # Hodnoty x,y jsou buď 1, 2, nebo 3, 4.
+    """
+    >>> run(0, (x, y), (lany, (lall, (eq, x, 1), (eq, y, 2)), (lall, (eq, x, 3), (eq, y, 4))))
+    ((1, 2), (3, 4))
+    """
+
+
+    # Můžeme si definovat vlastní cíle pomocí funkcí:
+    def one_or_two(x):
+        """Cíl, zda x je rovno jedné nebo dvoum."""
+        return (lany, (eq, x, 1), (eq, x, 2))
+
+    """
+    >>> run(0, x, (one_or_two, x))
+    (1, 2)
+    >>> run(0, (x, y), (one_or_two, x), (one_or_two, y))
+    ((1, 1), (2, 1), (1, 2), (2, 2))
+    """
+
+MEMBERO
+                
+    from kanren import var, run, eq, lall, lany, membero
+
+    x = var("x")
+    y = var("y")
+    z = var("y")
+
+    # Cíl:
+    #
+    # (membero, x, t)
+    #
+    # je splněn, pokud hodnota x se nachází v n-tici t.
+
+    """
+    >>> run(0, True, (membero, 2, (1, 2, 3)))
+    (True,)
+    >>> run(0, True, (membero, 4, (1, 2, 3)))
+    ()
+    >>> run(0, x, (membero, x, (1, 2, 3)))
+    (1, 2, 3)
+    """
+
+    """
+    >>> run(0, x, (membero, 2, (1, x, 3)))
+    (2,)
+    """
+
+    """
+    >>> run(0, x, (membero, 1, (1, x, 3)))
+    (~x, 1)
+    """
+    # Hodnota x může být x nebo 1.
+
+    """
+    >>> run(0, (x, y), (membero, x, (1, y, 3)))
+    ((1, ~y), (~y, ~y), (3, ~y))
+    """
+
+    """
+    >>> run(0, x, (membero, 2, x))
+    EarlyGoalError
+    """
+    # Chyba EarlyGoalError znamená, že není jasné, jak cíl splnit.
+    # Například zde se ptáme na všechny seznamy, které obsahují dvojku.
+
+    """
+    >>> run(0, x, (membero, x, (1, 2, 3)), (membero, x, (2, 3, 4)))
+    (2, 3)
+    >>> run(0, x, (lany, (membero, x, (1, 2, 3)), (membero, x, (2, 3, 4))))
+    (1, 2, 3, 4)
+    """
+
+    """
+    >>> run(0, x, (eq, y, (1, 2, 3)), (membero, x, y))
+    (1, 2, 3)
+    >>> run(0, x, (membero, y, ((1, 2), (3, 4))), (membero, x, y))
+    (1, 3, 2, 4)
+    """
+
+ARITH                
+                
+    from kanren import run, eq, var, membero
+    from kanren.arith import add
+
+    # Cíl:
+    #
+    # (add, x, y, z)
+    #
+    # je splněn, pokud součet čísel x,y se rovná číslu z.
+
+    x = var("x")
+    y = var("y")
+    z = var("z")
+
+    """
+    >>> run(0, True, (add, 2, 3, 5))
+    (True,)
+    >>> run(0, True, (add, 2, 3, 6))
+    ()
+    >>> run(0, x, (add, 2, 3, x))
+    (5,)
+    >>> run(0, x, (add, 2, x, 6))
+    (4,)
+    >>> run(0, z, (membero, x, (1, 2, 3)), (membero, y, (4, 5)), (add, x, y, z))
+    (5, 6, 7, 8)
+    """
+
+RELATION
+                
+    from kanren import run, eq, membero, var, conde, Relation, facts
+
+    x = var("x")
+    y = var("y")
+    z = var("z")
+
+    # Vlastní cíle můžeme definovat jako relaci.
+
+    results = Relation()
+
+    facts(results,
+          ("Anna", 1, 2),
+          ("Anna", 2, 5),
+          ("Bert", 1, 3),
+          ("Bert", 2, 2),
+          ("Cyril", 1, 2))
+
+    # Cíl
+    #
+    # (results, x, y, z)
+    #
+    # je splněn, pokud student jménem `x` získal `z` bodů z úkolu `y`. 
+
+    """
+    >>> run(0, True, (results, "Anna", 1, 2))
+    (True,)
+    >>> run(0, True, (results, "Anna", 1, 3))
+    ()
+    """
+
+    # Kolik bodů získala Anna z prvního úkolu?
+    """
+    >>> run(0, x, (results, "Anna", 1, x))
+    (2,)
+    """
+
+    # Jaké body získala Anna z libovolného úkolu? 
+    """
+    >>> run(0, x, (results, "Anna", y, x))
+    (5, 2)
+    """
+
+    # Kdo získal z prvního úkolu stejně bodů jako Anna?
+    """
+    >>> run(0, x, (results, "Anna", 1, y), (results, x, 1, y))
+    ('Anna', 'Cyril')
+    """
+
+    # Jaké jsou výsledky prvního úkolu?
+    """
+    >>> run(0, (x, y), (results, x, 1, y))
+    (('Anna', 2), ('Cyril', 2), ('Bert', 3))
+    """
+
+    def did_task(name, task):
+        score_var = var() # Pomocná proměnná
+        return (results, name, task, score_var)
+
+    # Cíl
+    #
+    # (did_task, x, y)
+    #
+    # je splněn, pokud student jménem `x` psal test `y`.
+
+    """
+    >>> run(0, x, (did_task, "Bert", x))
+    (2, 1)
+    >>> run(0, x, (did_task, "Cyril", x))
+    (1,)
+    """
