@@ -26,6 +26,29 @@ Objektově orientované programování vychá-zí ze třech základních princip
 
 > polymorfismus
 
+Atributy jsou proměnné objektu.
+Metoda je pojmenovaná funkce objektu.
+Jména atributů a metody objektů definujeme pomocí tříd a objekt je pak instancí této třidy.
+Inicializace atributů nám pomáhá k definování typu jakými atributy budou a zabraňuje nekonzistentním tavům.
 
+## základní třída
 
+class Point:
+    def __init__(self):
+        self.x = 0
+        self.y = 0
+        
+    def get_x(self):
+        return self.x
+    
+    def get_y(self):
+        return self.y
+    
+    def set_x(self, x):
+        self.x = x
+        return self
+    
+    def set_y(self, y):
+        self.y = y
+        return self
 
