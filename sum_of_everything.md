@@ -3,10 +3,10 @@ the assumption for UPOL exam
 
 PROCEDURAL | OOP | FUNCTIONAL | PARALEL | LOGICAL
 -----------|-----|------------|---------|--------
-prvni rok | zapozdření | anonymni funkce (lambda) | atomičnost | kanren |
-prvni rok | dědičnost | rekurze | kritická sekce | ekvivalence (eq) |
-prvni rok | polymorfismus| komponovani funkcí | lock | lall & lany |
-prvni rok | druhy rok | list filter | semafor | membero |
-prvni rok | druhy rok | list reduce | druhy rok | arithmetic |
-prvni rok | druhy rok | list map |  druhy rok  | relation |
-prvni rok | druhy rok | generátory & iterátor | druhy rok | druhy rok |
+*prvni rocnik (letni i zimni semestr)* | zapozdření | anonymni funkce (lambda) | atomičnost | kanren |
+*prvni rocnik (letni i zimni semestr)* | dědičnost | rekurze | kritická sekce | ekvivalence (eq) |
+*prvni rocnik (letni i zimni semestr)* | polymorfismus| komponovani funkcí | lock | lall & lany |
+*prvni rocnik (letni i zimni semestr)* | *druhy rocnik (zimni semestr)* | list filter | semafor | membero |
+*prvni rocnik (letni i zimni semestr)* | *druhy rocnik (zimni semestr)* | list reduce | *druhy rocnik (zimni semestr)* | arithmetic |
+*prvni rocnik (letni i zimni semestr)* | *druhy rocnik (zimni semestr)* | list map |  *druhy rocnik (zimni semestr)*  | relation |
+*prvni rocnik (letni i zimni semestr)* | *druhy rocnik (zimni semestr)* | generátory & iterátor | *druhy rocnik (zimni semestr)* | *druhy rocnik (zimni semestr)* |
