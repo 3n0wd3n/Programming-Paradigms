@@ -19,6 +19,11 @@ pracují, chápána jako jeden celek nazývaný objekt. Každý objekt je opět 
 Objekt můžeme dávat do proměnných, použít jako argument volání funkce nebo jej
 funkcí vrátit.
 
+Objektově orientované programování vychá-zí ze třech základních principů (rysů):
+> zapouzdření (encapsulation)
+> dědičnost (inheritance)
+> polymorfismus
+
 
 
 
