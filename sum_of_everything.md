@@ -1,5 +1,5 @@
 # Programming-Paradigms
-the assumption for UPOL exam
+The assumption for UPOL exam
 
 PROCEDURAL | OOP | FUNCTIONAL | PARALEL | LOGICAL
 -----------|-----|------------|---------|--------
